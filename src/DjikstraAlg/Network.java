@@ -101,7 +101,6 @@ public class Network
         Node X = new Node();
         Node Y = new Node();
         Node Z = new Node();
-
     }
 
     public ArrayList<Node> getNodeList()
