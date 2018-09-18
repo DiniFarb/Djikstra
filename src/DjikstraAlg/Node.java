@@ -9,7 +9,8 @@ public class Node
 
     public Node()
     {
-
+        this.visited = false;
+        this.actTempDist = -1;
     }
 
     public void setTempDist(int dist)

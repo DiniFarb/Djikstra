@@ -3,7 +3,8 @@ package DjikstraAlg;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Djikstra {
+public class Djikstra
+{
     List unvisited = new List();
     Node currentNode = new Node();
     Node startpoint = new Node();
@@ -11,7 +12,7 @@ public class Djikstra {
     ArrayList<Node> nodeList = new ArrayList<Node>();
 
 
-    public Djikstrakstra()
+    public Djikstra()
     {
 
     }
