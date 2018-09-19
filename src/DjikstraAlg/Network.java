@@ -1,72 +1,43 @@
 package DjikstraAlg;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class Network
+public class Network extends Node
 {
-    private ArrayList<Node> nodeList = new ArrayList<>();
+    private HashMap<String, Node> nodeList = new HashMap<>();
 
-    private int[][] mainList = {
-            {(int)'A',(int)'B',6}, 
-            {(int)'A',(int)'D',7},
-            {(int)'B',(int)'E',4},
-            {(int)'B',(int)'C',4},
-            {(int)'C',(int)'F',6},
-            {(int)'C',(int)'I',8},
-            {(int)'D',(int)'G',5},
-            {(int)'E',(int)'J',5},
-            {(int)'F',(int)'K',5},
-            {(int)'G',(int)'I',7},
-            {(int)'G',(int)'H',5},
-            {(int)'H',(int)'L',5},
-            {(int)'I',(int)'M',5},
-            {(int)'J',(int)'K',7},
-            {(int)'J',(int)'T',4},
-            {(int)'K',(int)'U',9},
-            {(int)'L',(int)'M',6},
-            {(int)'M',(int)'N',5},
-            {(int)'N',(int)'O',7},
-            {(int)'Q',(int)'P',8},
-            {(int)'Q',(int)'X',7},
-            {(int)'R',(int)'Z',4},
-            {(int)'R',(int)'Y',10},
-            {(int)'S',(int)'W',2},
-            {(int)'T',(int)'V',7},
-            {(int)'T',(int)'R',8},
-            {(int)'U',(int)'P',2},
-            {(int)'W',(int)'Y',9},
-            {(int)'X',(int)'Y',11},
-            {(int)'Y',(int)'Y',10},
-            {(int)'A',(int)'B',6},
-            {(int)'A',(int)'D',7},
-            {(int)'B',(int)'E',4},
-            {(int)'B',(int)'C',4},
-            {(int)'C',(int)'F',6},
-            {(int)'C',(int)'I',8},
-            {(int)'D',(int)'G',5},
-            {(int)'E',(int)'J',5},
-            {(int)'F',(int)'K',5},
-            {(int)'G',(int)'I',7},
-            {(int)'G',(int)'H',5},
-            {(int)'H',(int)'L',5},
-            {(int)'I',(int)'M',5},
-            {(int)'J',(int)'K',7},
-            {(int)'J',(int)'T',4},
-            {(int)'K',(int)'U',9},
-            {(int)'L',(int)'M',6},
-            {(int)'M',(int)'N',5},
-            {(int)'N',(int)'O',7},
-            {(int)'Q',(int)'P',8},
-            {(int)'Q',(int)'X',7},
-            {(int)'R',(int)'Z',4},
-            {(int)'R',(int)'Y',10},
-            {(int)'S',(int)'W',2},
-            {(int)'T',(int)'V',7},
-            {(int)'T',(int)'R',8},
-            {(int)'U',(int)'P',2},
-            {(int)'W',(int)'Y',9},
-            {(int)'X',(int)'Y',11},
-            {(int)'Y',(int)'Y',10}};
+    private String[][] mainList = {
+            {"A","B","6"},
+            {"A","D","7"},
+            {"B","E","4"},
+            {"B","C","4"},
+            {"C","F","6"},
+            {"C","I","8"},
+            {"D","G","5"},
+            {"E","J","5"},
+            {"F","K","5"},
+            {"G","I","7"},
+            {"G","H","5"},
+            {"H","L","5"},
+            {"I","M","5"},
+            {"J","K","7"},
+            {"J","T","4"},
+            {"K","U","9"},
+            {"L","M","6"},
+            {"M","N","5"},
+            {"N","O","7"},
+            {"Q","P","8"},
+            {"Q","X","7"},
+            {"R","Z","4"},
+            {"R","Y","10"},
+            {"S","W","2"},
+            {"T","V","7"},
+            {"T","R","8"},
+            {"U","P","2"},
+            {"W","Y","9"},
+            {"X","Y","11"},
+            {"Y","Y","10"}};
 
     public Network()
     {
@@ -75,60 +46,86 @@ public class Network
 
     private void createNode()
     {
-        Node A = new Node();
-        Node B = new Node();
-        Node C = new Node();
-        Node D = new Node();
-        Node E = new Node();
-        Node F = new Node();
-        Node G = new Node();
-        Node H = new Node();
-        Node I = new Node();
-        Node J = new Node();
-        Node K = new Node();
-        Node L = new Node();
-        Node M = new Node();
-        Node N = new Node();
-        Node O = new Node();
-        Node P = new Node();
-        Node Q = new Node();
-        Node R = new Node();
-        Node S = new Node();
-        Node T = new Node();
-        Node U = new Node();
-        Node V = new Node();
-        Node W = new Node();
-        Node X = new Node();
-        Node Y = new Node();
-        Node Z = new Node();
+        Node A = new Node(); nodeList.put("A",A);
+        Node B = new Node(); nodeList.put("B",B);
+        Node C = new Node(); nodeList.put("C",C);
+        Node D = new Node(); nodeList.put("D",D);
+        Node E = new Node(); nodeList.put("E",E);
+        Node F = new Node(); nodeList.put("F",F);
+        Node G = new Node(); nodeList.put("G",G);
+        Node H = new Node(); nodeList.put("H",H);
+        Node I = new Node(); nodeList.put("I",I);
+        Node J = new Node(); nodeList.put("J",J);
+        Node K = new Node(); nodeList.put("K",K);
+        Node L = new Node(); nodeList.put("L",L);
+        Node M = new Node(); nodeList.put("M",M);
+        Node N = new Node(); nodeList.put("N",N);
+        Node O = new Node(); nodeList.put("O",O);
+        Node P = new Node(); nodeList.put("P",P);
+        Node Q = new Node(); nodeList.put("Q",Q);
+        Node R = new Node(); nodeList.put("R",R);
+        Node S = new Node(); nodeList.put("S",S);
+        Node T = new Node(); nodeList.put("T",T);
+        Node U = new Node(); nodeList.put("U",U);
+        Node V = new Node(); nodeList.put("V",V);
+        Node W = new Node(); nodeList.put("W",W);
+        Node X = new Node(); nodeList.put("X",X);
+        Node Y = new Node(); nodeList.put("Y",Y);
+        Node Z = new Node(); nodeList.put("Z",Z);
     }
 
-    public ArrayList<Node> getNodeList()
+
+    public HashMap<String, Node> getNodeList()
     {
         return this.nodeList;
     }
 
-    public ArrayList<Node> getNeighboursAndDistance(Node node)
-    {
-        ArrayList<Node> neighbourList = new ArrayList<>();
 
-        neighbourList.add(node);
-        /* Muss noch geaendert werden */
-        return neighbourList;
+    public HashMap<String, String> getNeighboursAndDistance(String node)
+    {
+        HashMap<String, String> neighbourAndDistanceList = new HashMap<>();
+
+        for (int i = 0; i < mainList.length; i++)
+        {
+            if(node.indexOf(mainList[i][0]) != -1)
+            {
+                neighbourAndDistanceList.put(mainList[i][1], mainList[i][2]);
+            }
+        }
+        return neighbourAndDistanceList;
     }
 
-
-    public Node getShortestNode(Node startpoint)
+    public String getShortestDistance()
     {
+        int minDistance = -1;
+        String minNode = "null";
 
-        return startpoint;
+        for (int i = 0; i < nodeList.size(); i++)
+        {
+            /* Calculate from the unvisited and distance not -1 nodes the shortest distance to the predecessorNode */
+            if((nodeList.get(nodeList.keySet().toArray()[i]).getTempDist() != -1) && (nodeList.get(nodeList.keySet().toArray()[i]).getVisited() == false))
+            {
+                if((((nodeList.get(nodeList.keySet().toArray()[i]).getTempDist() < minDistance) && (nodeList.get(nodeList.keySet().toArray()[i]).getTempDist() >= 0))) || (minDistance == -1))
+                {
+                    minDistance = nodeList.get(nodeList.keySet().toArray()[i]).getTempDist();
+                    minNode = (String)nodeList.keySet().toArray()[i];
+                }
+            }
+        }
+        return minNode;
     }
 
-
-    public int getDistance(Node startpoint, Node endpoint)
+    public Boolean checkUnvisitedNode()
     {
-
-        return 0;
+        for (int i = 0; i < nodeList.size(); i++)
+        {
+            if(nodeList.get(nodeList.keySet().toArray()[i]).getVisited() == false)
+            {
+                System.out.println("Visited Node: " + nodeList.keySet().toArray()[i]);
+                return true;
+            }
+        }
+        return false;
     }
-
 }
+

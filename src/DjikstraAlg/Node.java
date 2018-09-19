@@ -2,9 +2,9 @@ package DjikstraAlg;
 
 public class Node
 {
-    int actTempDist;
-    Node predecessorNode = new Node();
-    Boolean visited;
+    private int actTempDist;
+    private String predecessorNode;
+    private Boolean visited;
 
 
     public Node()
@@ -15,34 +15,36 @@ public class Node
 
     public void setTempDist(int dist)
     {
+        this.actTempDist = dist;
+    }
 
+    public void addTempDist(int dist)
+    {
+        this.actTempDist += dist;
     }
 
     public int getTempDist()
     {
-
-        return 0;
+        return this.actTempDist;
     }
 
-    public void setPredecessorNode(Node node)
+    public void setPredecessorNode(String node)
     {
-
+        predecessorNode = node;
     }
 
-    public Node getPredecessorNode()
+    public String getPredecessorNode()
     {
-
         return predecessorNode;
     }
 
     public void  setVisited(Boolean value)
     {
-
+        this.visited = value;
     }
 
     public Boolean getVisited()
     {
-
-        return false;
+        return this.visited;
     }
 }
