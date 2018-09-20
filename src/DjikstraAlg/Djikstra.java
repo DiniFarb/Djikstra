@@ -14,7 +14,6 @@ public class Djikstra
     String endpoint;
 
 
-
     public Djikstra()
     {
         network = new Network();
