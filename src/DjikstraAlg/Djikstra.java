@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class Djikstra
 {
-    HashMap<String,Node> unvisitedNodeList = new HashMap<String,Node>();
+    HashMap<String,Node> unvisitedNodeList;
     Network network;
     String currentNode;
     String startpoint;
@@ -19,8 +19,7 @@ public class Djikstra
     {
         network = new Network();
 
-        unvisitedNodeList = network.getNodeList();
-
+        unvisitedNodeList = new HashMap<>(network.getNodeList());
 
         setStartAndEndpoint("A", "Z");
     }
@@ -67,7 +66,12 @@ public class Djikstra
         while(network.checkUnvisitedNode() == true)
         {
             currentNode = network.getShortestDistance();
-            System.out.println("Current Node: " + currentNode);
+            if(currentNode == "null")
+            {
+                System.out.println("Route fertig berechnet.");
+                printShortestDistnace();
+                return;
+            }
 
             /* Store the actual Distance */
             currentDistance = unvisitedNodeList.get(currentNode).getTempDist();
@@ -101,8 +105,19 @@ public class Djikstra
         }
     }
 
-    public void printShortestDistnace(Node starpoint, Node endpoint)
+    public void printShortestDistnace()
     {
+        for (int i = 0; i < unvisitedNodeList.size(); i++)
+        {
+            System.out.println("Node: " + unvisitedNodeList.keySet().toArray()[i] +
+                    " TempDistanz: " + unvisitedNodeList.get(unvisitedNodeList.keySet().toArray()[i]).getTempDist());
+        }
+
+        for (int i = 0; i < unvisitedNodeList.size(); i++)
+        {
+            System.out.println("Node1: " + unvisitedNodeList.keySet().toArray()[i] +
+                    " Node2: " + unvisitedNodeList.get(unvisitedNodeList.keySet().toArray()[i]).getPredecessorNode());
+        }
 
     }
 

@@ -6,6 +6,7 @@ import java.util.HashMap;
 public class Network extends Node
 {
     private HashMap<String, Node> nodeList = new HashMap<>();
+    private HashMap<String, Node> nodeListTest = new HashMap<>();
 
     private String[][] mainList = {
             {"A","B","6"},
@@ -36,8 +37,7 @@ public class Network extends Node
             {"T","R","8"},
             {"U","P","2"},
             {"W","Y","9"},
-            {"X","Y","11"},
-            {"Y","Y","10"}};
+            {"X","Y","11"}};
 
     public Network()
     {
@@ -46,6 +46,34 @@ public class Network extends Node
 
     private void createNode()
     {
+        /***************************************************************************************
+         *
+         *
+         *
+         *
+         */
+        /* Temprary ArrayList for create a table from all nodes without duplicates */
+        ArrayList<String> nodeNames = new ArrayList<>();
+        for(int i = 0; i < mainList.length; i++)
+        {
+            /* Eliminate duplicate nodes */
+            /* and create for evry node a new object */
+            /* store the node-objecst into a HashMap */
+            if(nodeNames.indexOf(mainList[i][0]) == -1)
+            {
+                nodeNames.add(mainList[i][0]);
+                nodeListTest.put(mainList[i][0], new Node());
+            }
+        }
+        /***************************************************************************************
+         *
+         *
+         *
+         *
+         */
+
+
+
         Node A = new Node(); nodeList.put("A",A);
         Node B = new Node(); nodeList.put("B",B);
         Node C = new Node(); nodeList.put("C",C);
@@ -83,16 +111,16 @@ public class Network extends Node
 
     public HashMap<String, String> getNeighboursAndDistance(String node)
     {
-        HashMap<String, String> neighbourAndDistanceList = new HashMap<>();
+        HashMap<String, String> neighbourAndDistanceMap = new HashMap<>();
 
         for (int i = 0; i < mainList.length; i++)
         {
             if(node.indexOf(mainList[i][0]) != -1)
             {
-                neighbourAndDistanceList.put(mainList[i][1], mainList[i][2]);
+                neighbourAndDistanceMap.put(mainList[i][1], mainList[i][2]);
             }
         }
-        return neighbourAndDistanceList;
+        return neighbourAndDistanceMap;
     }
 
     public String getShortestDistance()
