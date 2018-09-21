@@ -3,6 +3,14 @@ package DjikstraAlg;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Class Network: Create a new object from network
+ * class Network contains the map with all nodes, neighbours and their distance.
+ *
+ * @version 1.0
+ * @autor   Andreas and Patrick
+ * @date    21.09.2018
+ */
 public class Network
 {
     private HashMap<String, Node> nodeList = new HashMap<>();
@@ -41,11 +49,22 @@ public class Network
             {"X","Y","11"}};
 
 
+    /**
+     * Constructure: Create a new object from network
+     *
+     */
     public Network()
     {
         createNode();
     }
 
+
+    /**
+     * Create a list (HashMap) from all nodes.
+     * Into HashMap the nodes are stored like:  {"A", Node},{"B", Node}
+     *
+     * @return  none
+     */
     private void createNode()
     {
         /* Temprary ArrayList for create a table from all nodes without duplicates */
@@ -69,15 +88,23 @@ public class Network
     }
 
 
+    /**
+     * Return a list (HashMap) where all nodes are stored.
+     *
+     * @return HashMap List with all nodes
+     */
     public HashMap<String, Node> getNodeList()
     {
         return this.nodeList;
     }
 
-    /* todo: Cast einfuegen */
-    /****************************/
 
-
+    /**
+     * Search and store into a list all neighbours with their distance to the requested node
+     *
+     * @param node Node from where you want to know his neighbours with their distance
+     * @return HashMap Map with all neighbours and their distance to the requested node
+     */
     public HashMap<String, Integer> getNeighboursAndDistance(String node)
     {
         HashMap<String, Integer> neighbourAndDistanceMap = new HashMap<>();
@@ -96,6 +123,12 @@ public class Network
         return neighbourAndDistanceMap;
     }
 
+
+    /**
+     * Search and return the actual shortest distance from the complete node map
+     *
+     * @return String shortest distance
+     */
     public String getShortestDistance()
     {
         int minDistance = Integer.MAX_VALUE;
@@ -116,6 +149,12 @@ public class Network
         return minNode;
     }
 
+
+    /**
+     * Return the property if the node is visited or not visited
+     *
+     * @return Boolean true or false
+     */
     public Boolean checkUnvisitedNode()
     {
         for (int i = 0; i < nodeList.size(); i++)

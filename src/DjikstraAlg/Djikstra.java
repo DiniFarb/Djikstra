@@ -3,6 +3,15 @@ package DjikstraAlg;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
+/**
+ * Class Djikstra: Create a new object from Djikstra
+ * class Djikstra calculate form two or more points the shortest Distance
+ *
+ * @version 1.0
+ * @autor   Andreas and Patrick
+ * @date    21.09.2018
+ */
 public class Djikstra {
     HashMap<String, Node> unvisitedNodeList;
     Network network;
@@ -11,11 +20,20 @@ public class Djikstra {
     String endpoint;
 
 
+    /**
+     * Constructure: Create a new object from network
+     *
+     */
     public Djikstra() {
         network = new Network();
         unvisitedNodeList = new HashMap<>(network.getNodeList());
     }
 
+
+    /**
+     * Give the shortest distance from two points including a via point (startpoint, viapoint, endpoint)
+     *
+     */
     public void getDirection(String startpoint, String viapoint, String endpoint)
     {
         getDirection(startpoint, viapoint);
@@ -23,6 +41,11 @@ public class Djikstra {
         getDirection(viapoint, endpoint);
     }
 
+
+    /**
+     * Give the shortest distance from two points (startpoint, endpoint)
+     *
+     */
     public void getDirection(String startpoint, String endpoint)
     {
         HashMap<String, Integer> actNeighboursAndDistance = new HashMap<>();
@@ -55,6 +78,11 @@ public class Djikstra {
     }
 
 
+    /**
+     * Search the shortest distance form node to node and store the calculated sum of all distance per node.
+     * When all neighbours from a node as calculated, set this node as visited.
+     *
+     */
     private void calculateShortestDistance() {
         HashMap<String, Integer> actNeighboursAndDistance = new HashMap<>();
         int currentDistance = 0;
@@ -101,6 +129,11 @@ public class Djikstra {
         printShortestDistnace();
     }
 
+
+    /**
+     * Give the shortest distance from the searched way on the console out.
+     *
+     */
     private void printShortestDistnace() {
         ArrayList<String> waypoints = new ArrayList<>();
         String actWaypoint = "";
