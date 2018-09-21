@@ -1,18 +1,40 @@
 package DjikstraAlg;
 
+/**
+ * Class node: Describes the properties for the node.
+ *
+ * @version 1.0
+ * @autor   Andreas and Patrick
+ * @date    21.09.2018
+ */
 public class Node
 {
     private int actTempDist;
     private String predecessorNode;
     private Boolean visited;
+    private String name;
 
 
-    public Node()
+    /**
+     * Constructure: Create a new object from node
+     *
+     * @param name Name for the node
+     * @return  none
+     */
+    public Node(String name)
     {
+        this.name = name;
         this.visited = false;
-        this.actTempDist = -1;
+        this.actTempDist = Integer.MAX_VALUE;
     }
 
+
+    /**
+     * Constructure: Create a new object from node
+     *
+     * @param name Name for the node
+     * @return  none
+     */
     public void setTempDist(int dist)
     {
         this.actTempDist = dist;
