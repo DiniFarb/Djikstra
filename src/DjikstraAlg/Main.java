@@ -24,7 +24,6 @@ public class Main
 
 
 
-
         long runtime = System.nanoTime() - startTime;
         System.out.println(runtime/1000000+"ms");
     }
