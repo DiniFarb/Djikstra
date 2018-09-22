@@ -12,21 +12,22 @@ import java.util.HashMap;
  * @autor   Andreas and Patrick
  * @date    21.09.2018
  */
-public class Djikstra {
-    HashMap<String, Node> unvisitedNodeList;
-    Network network;
-    String currentNode;
-    String startpoint;
-    String endpoint;
+public class Djikstra
+{
+    private HashMap<String, Node> unvisitedNodeList;
+    private Network network;
+    private String currentNode;
+    private String startpoint;
+    private String endpoint;
 
 
     /**
      * Constructure: Create a new object from network
      *
      */
-    public Djikstra() {
+    public Djikstra()
+    {
         network = new Network();
-        unvisitedNodeList = new HashMap<>(network.getNodeList());
     }
 
 
@@ -36,9 +37,14 @@ public class Djikstra {
      */
     public void getDirection(String startpoint, String viapoint, String endpoint)
     {
+        int distanceStartToVia, distanceViaToEnd;
+        System.out.println("New way from " + startpoint + " to " + endpoint + " via " + viapoint);
         getDirection(startpoint, viapoint);
-        System.out.println("Via position:");
+        distanceStartToVia = unvisitedNodeList.get(viapoint).getTempDist();
+        System.out.println("Via position: " + viapoint);
         getDirection(viapoint, endpoint);
+        distanceViaToEnd = unvisitedNodeList.get(endpoint).getTempDist();
+        System.out.println("Total distance: " + (distanceStartToVia + distanceViaToEnd));
     }
 
 
@@ -48,6 +54,7 @@ public class Djikstra {
      */
     public void getDirection(String startpoint, String endpoint)
     {
+        unvisitedNodeList = new HashMap<>(network.createNode());
         HashMap<String, Integer> actNeighboursAndDistance = new HashMap<>();
 
         /* Store start and endpoint */
@@ -87,14 +94,9 @@ public class Djikstra {
         HashMap<String, Integer> actNeighboursAndDistance = new HashMap<>();
         int currentDistance = 0;
 
-        while (network.checkUnvisitedNode() == true)
+        while (network.checkUnvisitedNode(unvisitedNodeList) == true)
         {
-            currentNode = network.getShortestDistance();
-            if (currentNode == "null") {
-                System.out.println("Callculated done.");
-                printShortestDistnace();
-                return;
-            }
+            currentNode = network.getShortestDistance(unvisitedNodeList);
 
             /* Store the actual Distance */
             currentDistance = unvisitedNodeList.get(currentNode).getTempDist();
@@ -105,7 +107,7 @@ public class Djikstra {
             /* Write the new calculated tempDistance for all Neighbours from the currentNode*/
             for (int i = 0; i < actNeighboursAndDistance.size(); i++) {
                 /* Until jet, no way to this node found */
-                if (unvisitedNodeList.get(actNeighboursAndDistance.keySet().toArray()[i]).getTempDist() == -1) {
+                if (unvisitedNodeList.get(actNeighboursAndDistance.keySet().toArray()[i]).getTempDist() == Integer.MAX_VALUE) {
                     unvisitedNodeList.get(actNeighboursAndDistance.keySet().toArray()[i])
                             .setTempDist(currentDistance + actNeighboursAndDistance.get(actNeighboursAndDistance.keySet().toArray()[i]));
                     unvisitedNodeList.get(actNeighboursAndDistance.keySet().toArray()[i]).setPredecessorNode(currentNode);
@@ -141,7 +143,8 @@ public class Djikstra {
         waypoints.add(endpoint);
         actWaypoint = endpoint;
 
-        while(startpoint.equals(actWaypoint) == false) {
+        while(startpoint.equals(actWaypoint) == false)
+        {
             actWaypoint = unvisitedNodeList.get(actWaypoint).getPredecessorNode();
             waypoints.add(actWaypoint);
         }
@@ -151,5 +154,6 @@ public class Djikstra {
         {
             System.out.println(waypoints.get(i));
         }
+        System.out.println("Distance: " + unvisitedNodeList.get(endpoint).getTempDist());
     }
 }

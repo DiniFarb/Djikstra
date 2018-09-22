@@ -7,10 +7,23 @@ public class Main
         long startTime = System.nanoTime();
         Djikstra newRoute = new Djikstra();
 
-        newRoute.getDirection("A", "O");
+/*
+        System.out.println("Example from a point-to-point way.");
+        newRoute.getDirection("B", "Q");
         System.out.println("\n");
 
-//        newRoute.getDirection("A", "X", "W");
+        System.out.println("Example from a point-to-point way with an integrated via point.");
+        newRoute.getDirection("A", "Y", "B");
+*/
+
+
+        /* testProzeduren */
+        /* testProzedure1() oder testProzedure2() oder testProzedure3() */
+        Testprozeduren.testProzedure3();
+
+
+
+
 
         long runtime = System.nanoTime() - startTime;
         System.out.println(runtime/1000000+"ms");

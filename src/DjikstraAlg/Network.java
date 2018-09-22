@@ -13,8 +13,6 @@ import java.util.HashMap;
  */
 public class Network
 {
-    private HashMap<String, Node> nodeList = new HashMap<>();
-
     private String[][] mainList = {
             {"A","B","6"},
             {"A","D","7"},
@@ -50,12 +48,12 @@ public class Network
 
 
     /**
-     * Constructure: Create a new object from network
+     * Constructure:
      *
      */
     public Network()
     {
-        createNode();
+
     }
 
 
@@ -65,8 +63,10 @@ public class Network
      *
      * @return  none
      */
-    private void createNode()
+    public HashMap<String, Node> createNode()
     {
+        HashMap<String, Node> nodeList = new HashMap<>();
+
         /* Temprary ArrayList for create a table from all nodes without duplicates */
         ArrayList<String> nodeNames = new ArrayList<>();
         for(int i = 0; i < mainList.length; i++)
@@ -85,17 +85,8 @@ public class Network
                 nodeList.put(mainList[i][1], new Node(mainList[i][0]));
             }
         }
-    }
 
-
-    /**
-     * Return a list (HashMap) where all nodes are stored.
-     *
-     * @return HashMap List with all nodes
-     */
-    public HashMap<String, Node> getNodeList()
-    {
-        return this.nodeList;
+        return nodeList;
     }
 
 
@@ -129,7 +120,7 @@ public class Network
      *
      * @return String shortest distance
      */
-    public String getShortestDistance()
+    public String getShortestDistance(HashMap<String, Node> nodeList)
     {
         int minDistance = Integer.MAX_VALUE;
         String minNode = "null";
@@ -155,7 +146,7 @@ public class Network
      *
      * @return Boolean true or false
      */
-    public Boolean checkUnvisitedNode()
+    public Boolean checkUnvisitedNode(HashMap<String, Node> nodeList)
     {
         for (int i = 0; i < nodeList.size(); i++)
         {
