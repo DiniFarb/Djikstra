@@ -56,7 +56,7 @@ public class Node
      *
      * @return int Actual temporary distance
      */
-    public int getTempDist()
+    public int getTemporaryDistance()
     {
         return this.actTempDist;
     }

@@ -2,6 +2,7 @@ package DjikstraAlg;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 
 /**
@@ -14,7 +15,7 @@ import java.util.HashMap;
  */
 public class Djikstra
 {
-    private HashMap<String, Node> unvisitedNodeList;
+    private HashMap<String, Node> mapWithAllNodes;
     private Network network;
     private String currentNode;
     private String startpoint;
@@ -40,10 +41,10 @@ public class Djikstra
         int distanceStartToVia, distanceViaToEnd;
         System.out.println("New way from " + startpoint + " to " + endpoint + " via " + viapoint);
         getDirection(startpoint, viapoint);
-        distanceStartToVia = unvisitedNodeList.get(viapoint).getTempDist();
+        distanceStartToVia = mapWithAllNodes.get(viapoint).getTemporaryDistance();
         System.out.println("Via position: " + viapoint);
         getDirection(viapoint, endpoint);
-        distanceViaToEnd = unvisitedNodeList.get(endpoint).getTempDist();
+        distanceViaToEnd = mapWithAllNodes.get(endpoint).getTemporaryDistance();
         System.out.println("Total distance: " + (distanceStartToVia + distanceViaToEnd));
     }
 
@@ -54,7 +55,7 @@ public class Djikstra
      */
     public void getDirection(String startpoint, String endpoint)
     {
-        unvisitedNodeList = new HashMap<>(network.createNode());
+        mapWithAllNodes = new HashMap<>(network.createNodes());
         HashMap<String, Integer> actNeighboursAndDistance = new HashMap<>();
 
         /* Store start and endpoint */
@@ -68,16 +69,16 @@ public class Djikstra
         for (int i = 0; i < actNeighboursAndDistance.size(); i++) {
             /* Read and store the distance from startpoint to the neigbours */
             /* The neighbour and distance is stored into the HashMap "actNeighboursAnddistance */
-            unvisitedNodeList.get(actNeighboursAndDistance.keySet().toArray()[i])
+            mapWithAllNodes.get(actNeighboursAndDistance.keySet().toArray()[i])
                     .setTempDist(actNeighboursAndDistance.get(actNeighboursAndDistance.keySet().toArray()[i]));
 
             /* set on the neigbours the predecessorNode (startpoint) */
-            unvisitedNodeList.get(actNeighboursAndDistance.keySet().toArray()[i]).setPredecessorNode(startpoint);
+            mapWithAllNodes.get(actNeighboursAndDistance.keySet().toArray()[i]).setPredecessorNode(startpoint);
         }
 
         /* Set on the startpoint the tempDistance to 0(zero) and visited as true */
-        unvisitedNodeList.get(startpoint).setTempDist(0);
-        unvisitedNodeList.get(startpoint).setVisited(true);
+        mapWithAllNodes.get(startpoint).setTempDist(0);
+        mapWithAllNodes.get(startpoint).setVisited(true);
 
         /* choose the shortest or longest way */
         /* actually only the shortestDistance possible */
@@ -90,44 +91,43 @@ public class Djikstra
      * When all neighbours from a node as calculated, set this node as visited.
      *
      */
-    private void calculateShortestDistance() {
-        HashMap<String, Integer> actNeighboursAndDistance = new HashMap<>();
+    private void calculateShortestDistance()
+    {
+        HashMap<String, Integer> actuelNeighboursAndDistance = new HashMap<>();
         int currentDistance = 0;
 
-        while (network.checkUnvisitedNode(unvisitedNodeList) == true)
+        while (network.checkIfUnvisitedNodesAvaible(mapWithAllNodes) == true)
         {
-            currentNode = network.getShortestDistance(unvisitedNodeList);
+            currentNode = network.getNodeWithActualShortestDistance(mapWithAllNodes);
 
             /* Store the actual Distance */
-            currentDistance = unvisitedNodeList.get(currentNode).getTempDist();
+            currentDistance = mapWithAllNodes.get(currentNode).getTemporaryDistance();
 
-            /* Search the neighbours form the currentNode */
-            actNeighboursAndDistance = network.getNeighboursAndDistance(currentNode);
+            /* Search the neighbours form the currentNode and store it with the node-to-node distance */
+            actuelNeighboursAndDistance = network.getNeighboursAndDistance(currentNode);
 
             /* Write the new calculated tempDistance for all Neighbours from the currentNode*/
-            for (int i = 0; i < actNeighboursAndDistance.size(); i++) {
+            for (int i = 0; i < actuelNeighboursAndDistance.size(); i++) {
                 /* Until jet, no way to this node found */
-                if (unvisitedNodeList.get(actNeighboursAndDistance.keySet().toArray()[i]).getTempDist() == Integer.MAX_VALUE) {
-                    unvisitedNodeList.get(actNeighboursAndDistance.keySet().toArray()[i])
-                            .setTempDist(currentDistance + actNeighboursAndDistance.get(actNeighboursAndDistance.keySet().toArray()[i]));
-                    unvisitedNodeList.get(actNeighboursAndDistance.keySet().toArray()[i]).setPredecessorNode(currentNode);
+                if (mapWithAllNodes.get(actuelNeighboursAndDistance.keySet().toArray()[i]).getTemporaryDistance() == Integer.MAX_VALUE) {
+                    mapWithAllNodes.get(actuelNeighboursAndDistance.keySet().toArray()[i])
+                            .setTempDist(currentDistance + actuelNeighboursAndDistance.get(actuelNeighboursAndDistance.keySet().toArray()[i]));
+                    mapWithAllNodes.get(actuelNeighboursAndDistance.keySet().toArray()[i]).setPredecessorNode(currentNode);
                 }
                 /* Read and store the distance, including the tempDistance form the predecessor node */
                 /* Whe the distance is lower as the the stored distance, write the new distance with the new predecessorNode. --> Shorter distance found! */
-                else if (unvisitedNodeList.get(actNeighboursAndDistance.keySet().toArray()[i]).getTempDist() >
-                        (currentDistance + unvisitedNodeList.get(currentNode).getTempDist())) {
-                    unvisitedNodeList.get(actNeighboursAndDistance.keySet().toArray()[i])
-                            .addTempDist(actNeighboursAndDistance.get(actNeighboursAndDistance.keySet().toArray()[i]));
-                    unvisitedNodeList.get(actNeighboursAndDistance.keySet().toArray()[i]).setPredecessorNode(currentNode);
+                else if (mapWithAllNodes.get(actuelNeighboursAndDistance.keySet().toArray()[i]).getTemporaryDistance() >
+                        (currentDistance + mapWithAllNodes.get(currentNode).getTemporaryDistance())) {
+                    mapWithAllNodes.get(actuelNeighboursAndDistance.keySet().toArray()[i])
+                            .addTempDist(actuelNeighboursAndDistance.get(actuelNeighboursAndDistance.keySet().toArray()[i]));
+                    mapWithAllNodes.get(actuelNeighboursAndDistance.keySet().toArray()[i]).setPredecessorNode(currentNode);
                 }
             }
 
             /* Set on the startpoint the tempDistance to 0(zero) and visited as true */
-            unvisitedNodeList.get(currentNode).setVisited(true);
-//            System.out.println("Nodes: " + currentNode + " Neighbour: " + unvisitedNodeList.get(currentNode).getPredecessorNode());
+            mapWithAllNodes.get(currentNode).setVisited(true);
         }
 
-//        System.out.println("Callculated done.");
         printShortestDistnace();
     }
 
@@ -136,24 +136,25 @@ public class Djikstra
      * Give the shortest distance from the searched way on the console out.
      *
      */
-    private void printShortestDistnace() {
-        ArrayList<String> waypoints = new ArrayList<>();
-        String actWaypoint = "";
+    private void printShortestDistnace()
+    {
+        LinkedList<String> waypoints = new LinkedList<>();
+        String actualWaypoints = "";
 
-        waypoints.add(endpoint);
-        actWaypoint = endpoint;
+        waypoints.add(0,endpoint);
+        actualWaypoints = endpoint;
 
-        while(startpoint.equals(actWaypoint) == false)
+        while(startpoint.equals(actualWaypoints) == false)
         {
-            actWaypoint = unvisitedNodeList.get(actWaypoint).getPredecessorNode();
-            waypoints.add(actWaypoint);
+            actualWaypoints = mapWithAllNodes.get(actualWaypoints).getPredecessorNode();
+            waypoints.add(0,actualWaypoints);
         }
 
         System.out.println("The shortest way from " + startpoint + " to " + endpoint + " is:");
-        for (int i = waypoints.size()-1; i >= 0; i--)
+        for (int i = 0; i < waypoints.size(); i++)
         {
             System.out.println(waypoints.get(i));
         }
-        System.out.println("Distance: " + unvisitedNodeList.get(endpoint).getTempDist());
+        System.out.println("Distance: " + mapWithAllNodes.get(endpoint).getTemporaryDistance());
     }
 }

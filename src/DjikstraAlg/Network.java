@@ -13,7 +13,7 @@ import java.util.HashMap;
  */
 public class Network
 {
-    private String[][] mainList = {
+    private String[][] mainNodeList = {
             {"A","B","6"},
             {"A","D","7"},
             {"B","C","4"},
@@ -63,30 +63,30 @@ public class Network
      *
      * @return  none
      */
-    public HashMap<String, Node> createNode()
+    public HashMap<String, Node> createNodes()
     {
-        HashMap<String, Node> nodeList = new HashMap<>();
+        HashMap<String, Node> mapWithAllNodes = new HashMap<>();
 
         /* Temprary ArrayList for create a table from all nodes without duplicates */
         ArrayList<String> nodeNames = new ArrayList<>();
-        for(int i = 0; i < mainList.length; i++)
+        for(int i = 0; i < mainNodeList.length; i++)
         {
             /* Eliminate duplicate nodes */
             /* and create for every node a new object */
             /* store the node-objects into a HashMap */
-            if(nodeNames.indexOf(mainList[i][0]) == -1)
+            if(nodeNames.indexOf(mainNodeList[i][0]) == -1)
             {
-                nodeNames.add(mainList[i][0]);
-                nodeList.put(mainList[i][0], new Node(mainList[i][0]));
+                nodeNames.add(mainNodeList[i][0]);
+                mapWithAllNodes.put(mainNodeList[i][0], new Node(mainNodeList[i][0]));
             }
-            if(nodeNames.indexOf(mainList[i][1]) == -1)
+            if(nodeNames.indexOf(mainNodeList[i][1]) == -1)
             {
-                nodeNames.add(mainList[i][1]);
-                nodeList.put(mainList[i][1], new Node(mainList[i][0]));
+                nodeNames.add(mainNodeList[i][1]);
+                mapWithAllNodes.put(mainNodeList[i][1], new Node(mainNodeList[i][0]));
             }
         }
 
-        return nodeList;
+        return mapWithAllNodes;
     }
 
 
@@ -100,15 +100,15 @@ public class Network
     {
         HashMap<String, Integer> neighbourAndDistanceMap = new HashMap<>();
 
-        for (int i = 0; i < mainList.length; i++)
+        for (int i = 0; i < mainNodeList.length; i++)
         {
-            if(node.indexOf(mainList[i][0]) != -1)
+            if(node.indexOf(mainNodeList[i][0]) != -1)
             {
-                neighbourAndDistanceMap.put(mainList[i][1], Integer.parseInt(mainList[i][2]));
+                neighbourAndDistanceMap.put(mainNodeList[i][1], Integer.parseInt(mainNodeList[i][2]));
             }
-            if(node.indexOf(mainList[i][1]) != -1)
+            if(node.indexOf(mainNodeList[i][1]) != -1)
             {
-                neighbourAndDistanceMap.put(mainList[i][0], Integer.parseInt(mainList[i][2]));
+                neighbourAndDistanceMap.put(mainNodeList[i][0], Integer.parseInt(mainNodeList[i][2]));
             }
         }
         return neighbourAndDistanceMap;
@@ -120,20 +120,20 @@ public class Network
      *
      * @return String shortest distance
      */
-    public String getShortestDistance(HashMap<String, Node> nodeList)
+    public String getNodeWithActualShortestDistance(HashMap<String, Node> mapWithAllNodes)
     {
         int minDistance = Integer.MAX_VALUE;
         String minNode = "null";
 
-        for (int i = 0; i < nodeList.size(); i++)
+        for (int i = 0; i < mapWithAllNodes.size(); i++)
         {
             /* Calculate from the unvisited and distance not -1 nodes the shortest distance to the predecessorNode */
-            if((nodeList.get(nodeList.keySet().toArray()[i]).getTempDist() != Integer.MAX_VALUE) && (nodeList.get(nodeList.keySet().toArray()[i]).getVisited() == false))
+            if((mapWithAllNodes.get(mapWithAllNodes.keySet().toArray()[i]).getTemporaryDistance() != Integer.MAX_VALUE) && (mapWithAllNodes.get(mapWithAllNodes.keySet().toArray()[i]).getVisited() == false))
             {
-                if(nodeList.get(nodeList.keySet().toArray()[i]).getTempDist() < minDistance)
+                if(mapWithAllNodes.get(mapWithAllNodes.keySet().toArray()[i]).getTemporaryDistance() < minDistance)
                 {
-                    minDistance = nodeList.get(nodeList.keySet().toArray()[i]).getTempDist();
-                    minNode = (String)nodeList.keySet().toArray()[i];
+                    minDistance = mapWithAllNodes.get(mapWithAllNodes.keySet().toArray()[i]).getTemporaryDistance();
+                    minNode = (String)mapWithAllNodes.keySet().toArray()[i];
                 }
             }
         }
@@ -146,11 +146,11 @@ public class Network
      *
      * @return Boolean true or false
      */
-    public Boolean checkUnvisitedNode(HashMap<String, Node> nodeList)
+    public Boolean checkIfUnvisitedNodesAvaible(HashMap<String, Node> mapWithAllNodes)
     {
-        for (int i = 0; i < nodeList.size(); i++)
+        for (int i = 0; i < mapWithAllNodes.size(); i++)
         {
-            if(nodeList.get(nodeList.keySet().toArray()[i]).getVisited() == false)
+            if(mapWithAllNodes.get(mapWithAllNodes.keySet().toArray()[i]).getVisited() == false)
             {
                 return true;
             }
